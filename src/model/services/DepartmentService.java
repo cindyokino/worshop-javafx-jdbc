@@ -14,5 +14,13 @@ public class DepartmentService {
 		return dao.findAll(); //vai buscar os departamentos no banco de dados
 	}
 	
-
+	public void saveOrUpdate(Department obj) {
+		if (obj.getId() == null) {
+			dao.insert(obj);
+		}
+		else {
+			dao.update(obj);
+		}
+	}
+	
 }

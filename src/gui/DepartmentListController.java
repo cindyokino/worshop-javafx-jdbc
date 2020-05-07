@@ -84,6 +84,7 @@ public class DepartmentListController implements Initializable {
 			
 			DepartmentFormController controller = loader.getController(); //controlador da tela(o formulario) carregada (2 linhas acima)
 			controller.setDepartment(obj); //injetar o departamento no controlador
+			controller.setDepartmentService(new DepartmentService());
 			controller.upfateFormData(); //carregar os dados do obj no formulario 
 			
 			Stage dialogStage = new Stage();

@@ -10,4 +10,13 @@ public class Utils {
 	public static Stage currentStage(ActionEvent event) {
 		return (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
+	
+	public static Integer tryParseToInt(String str) { //funcao que converte String para Inteiro, mas se nao for Inteiro retorna null
+		try {
+			return Integer.parseInt(str);
+		}
+		catch (NumberFormatException e) { //se o numero nao for inteiro
+			return null;
+		}
+	}
 }
