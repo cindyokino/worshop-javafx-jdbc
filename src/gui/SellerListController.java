@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -24,6 +27,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
 import model.services.SellerService;
@@ -66,7 +71,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		Seller obj = new Seller();
-//		createDialogForm(obj, "/gui/departmentForm.fxml", parentStage);
+		createDialogForm(obj, "/gui/sellerForm.fxml", parentStage);
 	}
 
 	public void setSellerService(SellerService service) {
@@ -102,31 +107,31 @@ public class SellerListController implements Initializable, DataChangeListener {
 		initRemoveButtons();
 	}
 
-//	private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) { // funcao para carregar a
-//																						// novo departamento
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			Pane pane = loader.load(); // carregar a view/painel
-//
-//			SellerFormController controller = loader.getController(); // controlador da tela(o formulario) carregada
-//																			// (2 linhas acima)
-//			controller.setSeller(obj); // injetar o departamento no controlador
-//			controller.setSellerService(new SellerService());
-//			controller.subscribeDataChangeListener(this); // escutar o evento do onDataChanged
-//			controller.upfateFormData(); // carregar os dados do obj no formulario
-//
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Enter department data");
-//			dialogStage.setScene(new Scene(pane));
-//			dialogStage.setResizable(false); // janela nao pode ser redimensionada
-//			dialogStage.initOwner(parentStage); // quem é o Stage pai dessa janela
-//			dialogStage.initModality(Modality.WINDOW_MODAL); // indica se a janela vai ser modal ou se vao ter outro comportamento. MODAL=enquanto nao for fechada, nao posso acessar a janela anterior
-//			dialogStage.showAndWait();
-//		} 
-//		catch (IOException e) {
-//			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
-//		}
-//	}
+	private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) { // funcao para carregar a
+																						// novo departamento
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane = loader.load(); // carregar a view/painel
+
+			SellerFormController controller = loader.getController(); // controlador da tela(o formulario) carregada
+																			// (2 linhas acima)
+			controller.setSeller(obj); // injetar o departamento no controlador
+			controller.setSellerService(new SellerService());
+			controller.subscribeDataChangeListener(this); // escutar o evento do onDataChanged
+			controller.updateFormData(); // carregar os dados do obj no formulario
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Enter seller data");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false); // janela nao pode ser redimensionada
+			dialogStage.initOwner(parentStage); // quem é o Stage pai dessa janela
+			dialogStage.initModality(Modality.WINDOW_MODAL); // indica se a janela vai ser modal ou se vao ter outro comportamento. MODAL=enquanto nao for fechada, nao posso acessar a janela anterior
+			dialogStage.showAndWait();
+		} 
+		catch (IOException e) {
+			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
+	}
 
 	@Override
 	public void onDataChanged() {
@@ -146,7 +151,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 					return;
 				}
 				setGraphic(button);
-//				button.setOnAction(event -> createDialogForm(obj, "/gui/SellerForm.fxml", Utils.currentStage(event)));
+				button.setOnAction(event -> createDialogForm(obj, "/gui/SellerForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}
