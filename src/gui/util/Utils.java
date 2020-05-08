@@ -20,10 +20,17 @@ public class Utils {
 		return (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
 
-	public static Integer tryParseToInt(String str) { // funcao que converte String para Inteiro, mas se nao for Inteiro
-														// retorna null
+	public static Integer tryParseToInt(String str) { // funcao que converte String para Inteiro, mas se nao for Inteiro retorna null
 		try {
 			return Integer.parseInt(str);
+		} catch (NumberFormatException e) { // se o numero nao for inteiro
+			return null;
+		}
+	}
+	
+	public static Double tryParseToDouble(String str) { // funcao que converte String para Double, mas se nao for Double retorna null
+		try {
+			return Double.parseDouble(str);
 		} catch (NumberFormatException e) { // se o numero nao for inteiro
 			return null;
 		}
