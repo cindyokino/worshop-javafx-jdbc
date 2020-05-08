@@ -91,8 +91,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) { // funcao para carregar a
-																						// novo departamento
+	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) { // funcao para carregar o novo departamento
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load(); // carregar a view/painel
@@ -111,8 +110,8 @@ public class DepartmentListController implements Initializable, DataChangeListen
 			dialogStage.initOwner(parentStage); // quem é o Stage pai dessa janela
 			dialogStage.initModality(Modality.WINDOW_MODAL); // indica se a janela vai ser modal ou se vao ter outro comportamento. MODAL=enquanto nao for fechada, nao posso acessar a janela anterior
 			dialogStage.showAndWait();
-		} 
-		catch (IOException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}

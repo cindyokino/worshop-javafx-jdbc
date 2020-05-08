@@ -31,6 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
+import model.services.DepartmentService;
 import model.services.SellerService;
 
 public class SellerListController implements Initializable, DataChangeListener {
@@ -107,8 +108,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) { // funcao para carregar a
-																						// novo departamento
+	private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) { // funcao para carregar a nova lista
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load(); // carregar a view/painel
@@ -116,7 +116,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 			SellerFormController controller = loader.getController(); // controlador da tela(o formulario) carregada
 																			// (2 linhas acima)
 			controller.setSeller(obj); // injetar o departamento no controlador
-			controller.setSellerService(new SellerService());
+			controller.setServices(new SellerService(), new DepartmentService());
+			controller.loadAssociatedObjects(); //vai carregar os departamentos do banco de dados e deixar no controller
 			controller.subscribeDataChangeListener(this); // escutar o evento do onDataChanged
 			controller.updateFormData(); // carregar os dados do obj no formulario
 
@@ -129,6 +130,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 			dialogStage.showAndWait();
 		} 
 		catch (IOException e) {
+			e.printStackTrace(); //mostra no console as mensagens dos erros
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
